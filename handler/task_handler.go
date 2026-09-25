@@ -40,6 +40,17 @@ func (h *TaskHandler) Complete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// Delete handles DELETE /tasks/{id}.
+func (h *TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	err := h.uc.DeleteTask(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
 func writeTask(w http.ResponseWriter, t *domain.Task) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]any{

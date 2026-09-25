@@ -11,6 +11,15 @@ const (
 	StatusDone
 )
 
+// Priority is how urgently a Task needs attention, higher first.
+type Priority int
+
+const (
+	PriorityLow Priority = iota
+	PriorityMedium
+	PriorityHigh
+)
+
 // Task is a unit of work that belongs to a Project.
 type Task struct {
 	id          string
@@ -18,6 +27,7 @@ type Task struct {
 	title       string
 	description string
 	status      Status
+	priority    Priority
 	assigneeID  string
 	createdAt   time.Time
 	dueAt       time.Time
@@ -62,6 +72,13 @@ func (t *Task) CreatedAt() time.Time { return t.createdAt }
 
 // DueAt returns the task's due date.
 func (t *Task) DueAt() time.Time { return t.dueAt }
+
+// Priority returns the task's priority.
+func (t *Task) Priority() Priority { return t.priority }
+
+// SetPriority changes the task's priority. Not a getter: it takes a
+// parameter.
+func (t *Task) SetPriority(p Priority) { t.priority = p }
 
 // IsOverdue reports whether the task is still open past its due date. Not a
 // getter: it compares two values instead of returning a field.
