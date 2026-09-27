@@ -41,17 +41,3 @@ presets:
 | `infra/logger/noop.go` | `noop` | `Flush` matches; `Debug`, `Info`, `Error` do not, since each takes a parameter. |
 | `pkg/collection/stack.go` | `getter` | `Len` matches on a generic receiver; `Peek` does not (two results, indexes a field). |
 | `handler/task_handler.go` | `iferr` | Both handlers' guards call `http.Error` before `return`, so neither matches: `iferr` only hides a body of exactly one `return` statement. |
-
-## Build and run
-
-```sh
-go build ./...
-go run ./cmd/server
-```
-
-With the server running:
-
-```sh
-curl http://localhost:8080/tasks/task-1
-curl -X POST http://localhost:8080/tasks/task-1/complete
-```
