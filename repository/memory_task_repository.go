@@ -57,3 +57,14 @@ func (r *InMemoryTaskRepository) Close() error { return nil }
 
 // Migrate is a no-op: the in-memory store needs no schema migration.
 func (r *InMemoryTaskRepository) Migrate() {}
+
+// Warmup is a no-op: the in-memory store has no cache to pre-load.
+func (r *InMemoryTaskRepository) Warmup() {}
+
+// Delete removes the task with the given id, if present.
+func (r *InMemoryTaskRepository) Delete(id string) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	delete(r.tasks, id)
+	return nil
+}

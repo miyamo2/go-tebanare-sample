@@ -50,3 +50,12 @@ func (uc *TaskUseCase) CompleteTask(id string) error {
 	}
 	return uc.repo.Save(t)
 }
+
+// DeleteTask removes a task, rejecting the call when it does not exist.
+func (uc *TaskUseCase) DeleteTask(id string) error {
+	_, err := uc.repo.FindByID(id)
+	if err != nil {
+		return err
+	}
+	return uc.repo.Delete(id)
+}

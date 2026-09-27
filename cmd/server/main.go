@@ -31,6 +31,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /tasks/{id}", taskHandler.Get)
 	mux.HandleFunc("POST /tasks/{id}/complete", taskHandler.Complete)
+	mux.HandleFunc("DELETE /tasks/{id}", taskHandler.Delete)
 
 	log.Println("listening on :8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {

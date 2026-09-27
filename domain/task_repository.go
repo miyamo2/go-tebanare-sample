@@ -6,4 +6,5 @@ type TaskRepository interface {
 	Save(t *Task) error
 	FindByID(id string) (*Task, error)
 	ListByProject(projectID string) ([]*Task, error)
+	Delete(id string) error
 }
